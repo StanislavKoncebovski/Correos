@@ -33,6 +33,11 @@ namespace Correos
 		/// Default: labeled only.
 		/// </summary>
 		public static RegistrationPolicy RegistrationPolicy {get;set;} = RegistrationPolicy.LabeledOnly;
+
+		/// <summary>
+		/// Defines how to handle targets with the Correos name left empty.
+		/// </summary>
+		public static EmptyNameHandling EmptyNameHandling	{get;set;} = EmptyNameHandling.AssignFullMethodName;
 		#endregion
 
 		#region Public Features
@@ -71,7 +76,20 @@ namespace Correos
 
 				if (String.IsNullOrEmpty(key))
 				{
-					continue;
+					switch (EmptyNameHandling)
+					{
+						case EmptyNameHandling.AssignFullMethodName:
+							key = $"{method.DeclaringType.FullName}.{method.Name}";
+							break;
+
+						case EmptyNameHandling.AssignMethodName:
+							key = method.Name;
+							break;
+
+						case EmptyNameHandling.Skip:
+						default:
+							continue;
+					}
 				}
 					
 				if (!_requestTargets.ContainsKey(key))

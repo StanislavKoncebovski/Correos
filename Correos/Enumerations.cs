@@ -30,4 +30,29 @@ namespace Correos
 		/// </summary>
 		All
 	}
+
+	/// <summary>
+	/// Defines how empty Correos target names are handled.
+	/// </summary>
+	public enum EmptyNameHandling
+	{
+		/// <summary>
+		/// If Correos target name is left empty, 
+		/// the (short) name of the method itself will be assigned 
+		/// as the Correos target name.
+		/// </summary>
+		AssignMethodName,
+
+		/// <summary>
+		/// If Correos target name is left empty, 
+		/// the full name of the method itself will be assigned 
+		/// as the Correos target name.
+		/// </summary>
+		AssignFullMethodName,
+
+		/// <summary>
+		/// If Correos target name is left empty, the method will be skipped.
+		/// </summary>
+		Skip
+	}
 }
